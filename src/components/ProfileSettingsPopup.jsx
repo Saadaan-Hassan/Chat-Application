@@ -33,12 +33,6 @@ const ProfileSettingsPopup = ({
 			if (newProfileImage) {
 				const storageRef = ref(storage, `profile_images/${user.uid}`);
 
-				// Delete previous image if it exists
-				if (profileImage) {
-					const previousImageRef = ref(storage, profileImage);
-					await deleteObject(previousImageRef);
-				}
-
 				// Upload new image
 				await uploadBytes(storageRef, newProfileImage);
 				const profileImageUrl = await getDownloadURL(storageRef);
