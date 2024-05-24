@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { auth, db, storage } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { toast } from "react-toastify";
+import { useNavigate, Link } from "react-router-dom";
+import { LogIn } from "lucide-react";
 
 const Signup = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
 	const [profileImage, setProfileImage] = useState(null);
+	const navigation = useNavigate();
 
 	const handleSignup = async (e) => {
 		e.preventDefault();
@@ -37,6 +39,7 @@ const Signup = () => {
 			await updateUserProfile(userCredential.user, username, profileImageUrl);
 
 			// Redirect to chat room or profile page
+			navigation("/");
 		} catch (error) {
 			console.error("Error signing up: ", error);
 			toast.error(error.message);
@@ -67,69 +70,78 @@ const Signup = () => {
 	};
 
 	return (
-		<div className='min-h-screen flex items-center justify-center bg-gray-100'>
-			<div className='bg-white p-6 rounded shadow-md w-full max-w-sm'>
-				<h2 className='text-2xl mb-4'>Sign Up</h2>
+		<div className='min-h-screen flex items-center justify-center bg-gray-800'>
+			<div className='bg-gray-700 p-6 rounded shadow-md w-full max-w-sm'>
+				<img src='favicon.png' alt='Chatify' className='w-20 mx-auto' />
+				<h1 className='text-2xl font-semibold text-center mb-4 text-green-400'>
+					Lingua Link
+				</h1>
 				<form onSubmit={handleSignup}>
 					<div className='mb-4'>
-						<label className='block mb-1' htmlFor='email'>
-							Email
-						</label>
-						<input
-							type='email'
-							id='email'
-							className='w-full p-2 border border-gray-300 rounded'
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							required
-						/>
-					</div>
-					<div className='mb-4'>
-						<label className='block mb-1' htmlFor='password'>
-							Password
-						</label>
-						<input
-							type='password'
-							id='password'
-							className='w-full p-2 border border-gray-300 rounded'
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							required
-						/>
-					</div>
-					<div className='mb-4'>
-						<label className='block mb-1' htmlFor='username'>
+						<label className='block mb-1 text-gray-400' htmlFor='username'>
 							Username
 						</label>
 						<input
 							type='text'
 							id='username'
-							className='w-full p-2 border border-gray-300 rounded'
+							className='w-full p-2 border border-gray-600 bg-gray-800 rounded'
 							value={username}
 							onChange={(e) => setUsername(e.target.value)}
 							required
 						/>
 					</div>
 					<div className='mb-4'>
-						<label className='block mb-1' htmlFor='profileImage'>
+						<label className='block mb-1 text-gray-400' htmlFor='email'>
+							Email
+						</label>
+						<input
+							type='email'
+							id='email'
+							className='w-full p-2 border border-gray-600 bg-gray-800 rounded'
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+							required
+						/>
+					</div>
+					<div className='mb-4'>
+						<label className='block mb-1 text-gray-400' htmlFor='password'>
+							Password
+						</label>
+						<input
+							type='password'
+							id='password'
+							className='w-full p-2 border border-gray-600 bg-gray-800 rounded text-gray-300'
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							required
+						/>
+					</div>
+					<div className='mb-4'>
+						<label className='block mb-1 text-gray-400' htmlFor='profileImage'>
 							Profile Image
 						</label>
 						<input
 							type='file'
 							id='profileImage'
 							accept='image/*'
-							className='w-full p-2 border border-gray-300 rounded'
+							className='w-full p-2 border border-gray-600 bg-gray-800 rounded text-gray-300'
 							onChange={handleImageUpload}
 						/>
 					</div>
 					<button
-						className='w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600'
+						className='w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 flex items-center justify-center gap-x-2'
 						type='submit'>
+						<LogIn />
 						Sign Up
 					</button>
+					<p className='text-center mt-4 text-gray-400'>
+						Already have an account?{" "}
+						<Link to='/login' className='text-green-500'>
+							Log In
+						</Link>
+					</p>
 				</form>
 			</div>
-			<ToastContainer position='bottom-right' autoClose={3000} />
 		</div>
 	);
 };
