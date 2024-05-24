@@ -84,7 +84,7 @@ const Signup = () => {
 						<input
 							type='text'
 							id='username'
-							className='w-full p-2 border border-gray-600 bg-gray-800 rounded'
+							className='w-full p-2 border border-gray-600 bg-gray-800 rounded text-gray-300'
 							value={username}
 							onChange={(e) => setUsername(e.target.value)}
 							required
@@ -97,7 +97,7 @@ const Signup = () => {
 						<input
 							type='email'
 							id='email'
-							className='w-full p-2 border border-gray-600 bg-gray-800 rounded'
+							className='w-full p-2 border border-gray-600 bg-gray-800 rounded text-gray-300'
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
