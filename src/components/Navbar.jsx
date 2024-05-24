@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
 	const { currentUser } = useAuth();
@@ -12,6 +13,7 @@ const Navbar = () => {
 			await signOut(auth);
 		} catch (error) {
 			console.error("Error logging out: ", error);
+			toast.error("Error logging out");
 		}
 	};
 
@@ -19,7 +21,7 @@ const Navbar = () => {
 		<nav className='bg-blue-500 p-4'>
 			<div className='container mx-auto flex justify-between items-center'>
 				<Link to='/' className='text-white text-lg'>
-					ChatApp
+					Lingua Link
 				</Link>
 				<div>
 					{currentUser ? (
