@@ -1,6 +1,4 @@
-// App.js
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
 	BrowserRouter as Router,
 	Route,
@@ -27,14 +25,48 @@ const AuthRoute = ({ element }) => {
 };
 
 const App = () => {
+	const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setIsSmallScreen(window.innerWidth < 768);
+		};
+
+		// Set initial screen size
+		handleResize();
+
+		// Add resize event listener
+		window.addEventListener("resize", handleResize);
+
+		// Remove event listener on component unmount
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
+
 	return (
 		<AuthProvider>
 			<Router>
-				<Routes>
-					<Route path='/login' element={<AuthRoute element={<Login />} />} />
-					<Route path='/signup' element={<AuthRoute element={<Signup />} />} />
-					<Route path='/' element={<PrivateRoute element={<ChatRooms />} />} />
-				</Routes>
+				{isSmallScreen ? (
+					<div className='flex items-center justify-center h-screen text-center bg-gray-800 font-semibold px-5'>
+						<p className='text-white bg-red-500 p-4 rounded'>
+							This app is not supported on small screens. Please use a device
+							with a larger screen size.
+						</p>
+					</div>
+				) : (
+					<Routes>
+						<Route path='/login' element={<AuthRoute element={<Login />} />} />
+						<Route
+							path='/signup'
+							element={<AuthRoute element={<Signup />} />}
+						/>
+						<Route
+							path='/'
+							element={<PrivateRoute element={<ChatRooms />} />}
+						/>
+					</Routes>
+				)}
 			</Router>
 
 			<ToastContainer position='bottom-right' autoClose={3000} />

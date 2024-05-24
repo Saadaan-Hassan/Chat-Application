@@ -263,7 +263,7 @@ const ChatRoom = ({ roomId, setRoom }) => {
 					type='text'
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
-					className='flex-grow p-2 border border-gray-300 rounded-l-md focus:outline-none'
+					className='flex-grow p-2 border border-gray-300 rounded-l-md focus:outline-none bg-gray-800 text-gray-300'
 					placeholder='Type your message'
 				/>
 				<button
