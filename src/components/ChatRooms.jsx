@@ -10,7 +10,6 @@ import {
 } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 import ChatRoom from "./ChatRoom";
 import { useAuth } from "../context/AuthContext";
 import { UsersRound, Search, Power, Settings } from "lucide-react";
